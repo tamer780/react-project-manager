@@ -1,8 +1,10 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import Input from "./Input.jsx";
 import Modal from "./Modal.jsx";
+import { ProjectContext } from "../store/ProjectContext.jsx";
 
-export default function NewProject({ onAdd, onCancle }) {
+export default function NewProject() {
+  const { handleCancleBtn, handleAddProject } = useContext(ProjectContext);
   const modal = useRef();
   const title = useRef();
   const description = useRef();
@@ -19,7 +21,7 @@ export default function NewProject({ onAdd, onCancle }) {
       modal.current.open();
       return;
     }
-    onAdd({
+    handleAddProject({
       title: enteredTitle,
       description: enteredDescription,
       dueDate: enteredDueDate,
@@ -38,7 +40,7 @@ export default function NewProject({ onAdd, onCancle }) {
         <menu className="flex gap-4 justify-end items-center my-4">
           <li>
             <button
-              onClick={onCancle}
+              onClick={handleCancleBtn}
               className="text-stone-800 hover:text-stone-950"
             >
               Cancle

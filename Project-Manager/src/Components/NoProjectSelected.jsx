@@ -1,6 +1,10 @@
 import noImage from "../assets/no-projects.png";
 import Button from "./Button.jsx";
-export default function NoProjectSelected({ onAddProject }) {
+import { ProjectContext } from "../store/ProjectContext.jsx";
+import { useContext } from "react";
+
+export default function NoProjectSelected() {
+  const { handleStartAddProject } = useContext(ProjectContext);
   return (
     <div className="w-2/3 mt-24 text-center">
       <img
@@ -15,7 +19,7 @@ export default function NoProjectSelected({ onAddProject }) {
         Selecte a Project or Create a new one.
       </p>
       <p className="mt-8">
-        <Button onClick={onAddProject}>Create new project</Button>
+        <Button onClick={handleStartAddProject}>Create new project</Button>
       </p>
     </div>
   );
