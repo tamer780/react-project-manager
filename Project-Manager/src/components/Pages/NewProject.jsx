@@ -1,22 +1,23 @@
 import { useRef } from "react";
-import Input from "./Input.jsx";
-import Modal from "./Modal.jsx";
-
-export default function NewProject({ onAdd, onCancle }) {
-  const modal = useRef();
+import Input from "../UI/Input.jsx";
+import Modal from "../UI/Modal.jsx";
+export default function NewProject({ onAdd, onCancel }) {
+  const modalRef = useRef();
   const title = useRef();
   const description = useRef();
   const dueDate = useRef();
+
   function handleSaveProject() {
     const enteredTitle = title.current.value;
     const enteredDescription = description.current.value;
     const enteredDueDate = dueDate.current.value;
+
     if (
       enteredTitle.trim() === "" ||
       enteredDescription.trim() === "" ||
-      enteredDueDate.trim() === ""
+      enteredDueDate === ""
     ) {
-      modal.current.open();
+      modalRef.current.openModal();
       return;
     }
     onAdd({
@@ -25,38 +26,39 @@ export default function NewProject({ onAdd, onCancle }) {
       dueDate: enteredDueDate,
     });
   }
+
   return (
     <>
-      <Modal btnCaption="Okay!" ref={modal}>
-        <h2 className="font-bold text-xl text-stone-700 my-4">Invaild Input</h2>
-        <p className="text-stone-400">Oops...Someting went wrong.</p>
+      <Modal ref={modalRef} buttonText="Okay!">
+        <h1 className="mb-4 text-stone-800 font-bold text-xl">Invalid input</h1>
+        <p className="text-stone-400">Oops...Something went wrong.</p>
         <p className="text-stone-400 mb-4">
-          Please make sure you provided value for every input field.
+          Please, make sure all fields are filled.
         </p>
       </Modal>
-      <div className="w-[35rem] mt-16">
-        <menu className="flex gap-4 justify-end items-center my-4">
+      <div className="mt-16 max-w-[35rem] w-full">
+        <menu className="flex gap-4 justify-end items-center">
           <li>
             <button
-              onClick={onCancle}
+              onClick={onCancel}
               className="text-stone-800 hover:text-stone-950"
             >
-              Cancle
+              Cancel
             </button>
           </li>
           <li>
             <button
               onClick={handleSaveProject}
-              className="bg-stone-800 text-stone-50 hover:bg-stone-950 px-4 py-2 rounded-md"
+              className="bg-stone-700 py-2 px-4 rounded-md text-stone-400 hover:text-stone-50 hover:bg-stone-800"
             >
               Save
             </button>
           </li>
         </menu>
-        <div>
+        <div className="mt-4">
           <Input ref={title} label="Title" type="text" />
           <Input ref={description} label="Description" textarea />
-          <Input ref={dueDate} label="Due Date" type="date" />
+          <Input ref={dueDate} label="DueDate" type="date" />
         </div>
       </div>
     </>
